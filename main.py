@@ -9,13 +9,13 @@ startup_time = time.time()
 import os
 
 # install requirements
-import Piloteddependencies
+import mzdependencies
 
 print("Loading virtual env...\n")
 os.system("virtualenv venv -p python3")
 
 print("Installing npm dependencies...\n")
-for i in Piloteddependencies.npm_dependencies: os.system(f"npm install {i} --save")
+for i in mzdependencies.npm_dependencies: os.system(f"npm install {i} --save")
 
 # print("Running `pip install -U pip setuptools`...\n")
 # os.system("pip install -U pip setuptools")
@@ -63,7 +63,7 @@ while True:
         from discord.ext.commands.errors import *
         
         import Pilotedhelp
-        import Pilotedutils
+        import mzutils
         
         # for replit config:
         import replit
@@ -135,7 +135,7 @@ def replitGetAllKeys():
 def removeprefix(s, prefix):
     """
     Useful for python < 3.9
-    Note: This is also defined in Pilotedutils.py
+    Note: This is also defined in mzutils.py
     """
     if s.startswith(prefix):
         return s[len(prefix):]
@@ -144,7 +144,7 @@ def removeprefix(s, prefix):
 
 def removesuffix(s, suffix):
     """
-    Note: This is also defined in Pilotedutils.py
+    Note: This is also defined in mzutils.py
     """
     if s.endswith(suffix):
         return s[:-len(suffix)]
@@ -230,7 +230,7 @@ ownerid = 926410988738183189
 istyping = []
 replitInit("msgpings", {})
 musicDict = {}
-bannedWords = Pilotedutils.bannedWords
+bannedWords = mzutils.bannedWords
 replitInit("gwended", [])
 replitInit("tickets", '')
 MAX_INT = 2147483647  # max int32 size
@@ -426,7 +426,7 @@ async def on_message(message):
         
         if timesecs > 10:
             
-            afklen = Pilotedutils.timestr(timesecs)
+            afklen = mzutils.timestr(timesecs)
             
             afkdict.pop(str(message.author.id))
             
@@ -1392,7 +1392,7 @@ async def slowmode(ctx, duration: str):
         await ctx.channel.send('You are missing `Manage Messages` permissions!')
         return
     else:
-        seconds = Pilotedutils.parseTime(duration)
+        seconds = mzutils.parseTime(duration)
         await ctx.channel.edit(slowmode_delay=seconds)
         await ctx.channel.send(f"Set the slowmode for channel: `#{ctx.channel}` to `{seconds}` seconds!")
 
@@ -1763,9 +1763,9 @@ async def about(ctx):
     
     msg1 = await ctx.send("`Loading...`")
     
-    uptime2 = Pilotedutils.timestr(secs=uptime)
+    uptime2 = mzutils.timestr(secs=uptime)
     
-    sysinfl = Pilotedutils.sysinf()
+    sysinfl = mzutils.sysinf()
     
     msgmain = f"""
 Piloted Bot V2
@@ -2340,7 +2340,7 @@ async def timer(ctx, duration, *, item=' '):
     
     stop = False
     timel = duration2
-    timels = Pilotedutils.timestr(duration2)
+    timels = mzutils.timestr(duration2)
     iters = 0
     startt = datetime.datetime.utcnow()
     
@@ -2376,7 +2376,7 @@ async def timer(ctx, duration, *, item=' '):
         await asyncio.sleep(10 - lasttt)
         
         timel = timel - (10 - lasttt)
-        timels = Pilotedutils.timestr(timel)
+        timels = mzutils.timestr(timel)
         
         embed_dict = embed.to_dict()
         
@@ -3266,7 +3266,7 @@ async def debug(ctx):
 
 @bot.command(aliases=['tempmute'])
 async def timeout(ctx, member: discord.Member, duration: str, *, reason: str = None):
-    duration2 = Pilotedutils.parseTime(duration)
+    duration2 = mzutils.parseTime(duration)
     if duration2 is None:
         # time parsing failed
         return
