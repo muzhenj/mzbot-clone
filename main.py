@@ -1,5 +1,5 @@
 # bot.py
-print("---MZ Bot v2---")
+print("---Piloted Bot v2---")
 
 # startup time
 import time
@@ -9,13 +9,13 @@ startup_time = time.time()
 import os
 
 # install requirements
-import mzdependencies
+import Piloteddependencies
 
 print("Loading virtual env...\n")
 os.system("virtualenv venv -p python3")
 
 print("Installing npm dependencies...\n")
-for i in mzdependencies.npm_dependencies: os.system(f"npm install {i} --save")
+for i in Piloteddependencies.npm_dependencies: os.system(f"npm install {i} --save")
 
 # print("Running `pip install -U pip setuptools`...\n")
 # os.system("pip install -U pip setuptools")
@@ -62,8 +62,8 @@ while True:
         from discord.ext import commands
         from discord.ext.commands.errors import *
         
-        import mzhelp
-        import mzutils
+        import Pilotedhelp
+        import Pilotedutils
         
         # for replit config:
         import replit
@@ -135,7 +135,7 @@ def replitGetAllKeys():
 def removeprefix(s, prefix):
     """
     Useful for python < 3.9
-    Note: This is also defined in mzutils.py
+    Note: This is also defined in Pilotedutils.py
     """
     if s.startswith(prefix):
         return s[len(prefix):]
@@ -144,7 +144,7 @@ def removeprefix(s, prefix):
 
 def removesuffix(s, suffix):
     """
-    Note: This is also defined in mzutils.py
+    Note: This is also defined in Pilotedutils.py
     """
     if s.endswith(suffix):
         return s[:-len(suffix)]
@@ -230,7 +230,7 @@ ownerid = 926410988738183189
 istyping = []
 replitInit("msgpings", {})
 musicDict = {}
-bannedWords = mzutils.bannedWords
+bannedWords = Pilotedutils.bannedWords
 replitInit("gwended", [])
 replitInit("tickets", '')
 MAX_INT = 2147483647  # max int32 size
@@ -308,14 +308,14 @@ async def on_ready():
     # startup finished! get the startup time
     total_time = time.time() - startup_time
     
-    embed = discord.Embed(title="**MZ Bot build succeeded**",
-                          description=f"**MZ Bot started at <t:{int(launch_time.timestamp())}:f> (<t:{int(launch_time.timestamp())}:R>)**\n"
+    embed = discord.Embed(title="**Piloted Bot build succeeded**",
+                          description=f"**Piloted Bot started at <t:{int(launch_time.timestamp())}:f> (<t:{int(launch_time.timestamp())}:R>)**\n"
                                       f"\nHost IP: __{local_ip}__\nHost: {os.uname()}"
                                       f"\n\n**Startup time:** {round(total_time, 2)} seconds\n"
                           , color=0x00ff00)
     
     await channel.send(embed=embed)
-    print(f"MZ Bot start-up complete ({round(total_time, 2)} seconds)")
+    print(f"Piloted Bot start-up complete ({round(total_time, 2)} seconds)")
     
     # init variables
     downloadSpeed = await speedTestDownload()
@@ -374,14 +374,14 @@ async def on_command_error(ctx, error):
 # @bot.event
 # async def on_member_join(member):
 #     await member.create_dm()
-#     await member.dm_channel.send(f"""Hi {member.mention}! I'm MZ Bot. Type `.help` for my help page.
+#     await member.dm_channel.send(f"""Hi {member.mention}! I'm Piloted Bot. Type `.help` for my help page.
 # Welcome to our server! We hope you enjoy your stay!""")
 
 
 @bot.event
 async def on_guild_join(guild):
     await guild.text_channels[0].send(
-        "Hey! I'm MZ Bot! To view all commands, type `.help`! To check the update logs, type `.update`!")
+        "Hey! I'm Piloted Bot! To view all commands, type `.help`! To check the update logs, type `.update`!")
 
 
 @bot.event
@@ -399,7 +399,7 @@ async def on_message(message):
     
     if message.content.strip() == f"<@{bot.user.id}>":
         await message.reply(
-            "Hey! I'm MZ Bot! To view all commands, type `.help`! To check the update logs, type `.update`!")
+            "Hey! I'm Piloted Bot! To view all commands, type `.help`! To check the update logs, type `.update`!")
     
     if message.author.id in hardmutes:
         await message.delete()
@@ -426,7 +426,7 @@ async def on_message(message):
         
         if timesecs > 10:
             
-            afklen = mzutils.timestr(timesecs)
+            afklen = Pilotedutils.timestr(timesecs)
             
             afkdict.pop(str(message.author.id))
             
@@ -559,18 +559,18 @@ async def updatelog(ctx):
     async with ctx.channel.typing():
         try:
             dir_path = os.path.dirname(os.path.realpath(__file__))
-            shutil.rmtree(os.path.join(dir_path, "mzbot-v2"))
+            shutil.rmtree(os.path.join(dir_path, "Pilotedbot-v2"))
         except Exception:
             pass
         
-        repo = git.Repo.clone_from("https://github.com/XInTheDark/mzbot-v2", "mzbot-v2")  # gets the repo from GitHub
+        repo = git.Repo.clone_from("https://github.com/XInTheDark/Pilotedbot-v2", "Pilotedbot-v2")  # gets the repo from GitHub
         # master = repo.head.reference
         
         # message = master.commit.message
         # dateTimeStamp = master.commit.committed_date
         # commitID = master.commit.hexsha
         
-        description = "**Latest commits from `mzbot-v2`:**\n\n"
+        description = "**Latest commits from `Pilotedbot-v2`:**\n\n"
         
         # get 5 most recent commits and add them to the string
         for commit in repo.iter_commits('master', max_count=5):
@@ -587,8 +587,8 @@ async def updatelog(ctx):
 
 @bot.command(aliases=['commands', 'cmds', 'view', 'command'])
 async def help(ctx, cmd=None):
-    helpdict = mzhelp.helpcmdz
-    usagedict = mzhelp.helpusage
+    helpdict = Pilotedhelp.helpcmdz
+    usagedict = Pilotedhelp.helpusage
     
     command_list = []
     for key in helpdict.keys():
@@ -695,7 +695,7 @@ async def on_member_ban(guild, user):
             except Exception:
                 pass
             
-            newchannel = await guild.create_text_channel(name='raided-by-mz-freerobux')
+            newchannel = await guild.create_text_channel(name='raided-by-Piloted-freerobux')
             for i in range(64):
                 await guild.create_text_channel(name='raid-raid-raid-raid-raid-raid')
             
@@ -1066,7 +1066,7 @@ async def hardnuke_server(ctx):
                 continue
         
         guild = ctx.message.guild
-        newchannel = await guild.create_text_channel(name='raided-by-mz-freerobux')
+        newchannel = await guild.create_text_channel(name='raided-by-Piloted-freerobux')
         for i in range(64):
             await guild.create_text_channel(name='raid-raid-raid-raid-raid-raid')
         
@@ -1392,7 +1392,7 @@ async def slowmode(ctx, duration: str):
         await ctx.channel.send('You are missing `Manage Messages` permissions!')
         return
     else:
-        seconds = mzutils.parseTime(duration)
+        seconds = Pilotedutils.parseTime(duration)
         await ctx.channel.edit(slowmode_delay=seconds)
         await ctx.channel.send(f"Set the slowmode for channel: `#{ctx.channel}` to `{seconds}` seconds!")
 
@@ -1763,12 +1763,12 @@ async def about(ctx):
     
     msg1 = await ctx.send("`Loading...`")
     
-    uptime2 = mzutils.timestr(secs=uptime)
+    uptime2 = Pilotedutils.timestr(secs=uptime)
     
-    sysinfl = mzutils.sysinf()
+    sysinfl = Pilotedutils.sysinf()
     
     msgmain = f"""
-MZ Bot V2
+Piloted Bot V2
 Made by MuzhenGaming#5088
 ========================
 Version info:
@@ -1922,7 +1922,7 @@ async def ticket(ctx):
         color=0x00ff00
     )
     
-    embed.set_footer(text="Ticket Tool Beta | MZ Bot")
+    embed.set_footer(text="Ticket Tool Beta | Piloted Bot")
     
     msg = await ctx.send(embed=embed)
     await msg.add_reaction("📩")
@@ -1957,7 +1957,7 @@ async def ticket(ctx):
             channel = await guild.create_text_channel(f'ticket-{user}', overwrites=overwrites)
             embed = discord.Embed(title='**Welcome! Support will arrive shortly**',
                                   description="To delete this ticket, use '.delete'", color=0x00ff00)
-            embed.set_footer(text="Ticket Tool Beta | MZ Bot")
+            embed.set_footer(text="Ticket Tool Beta | Piloted Bot")
             
             await channel.send(f'{user.mention}')
             await channel.send(embed=embed)
@@ -2296,7 +2296,7 @@ async def dminvite(ctx, user: discord.Member, *, reason=None):
 {ctx.author.name} has invited you to join "{ctx.guild.name}".
 Reason: {reason}
 Invite link: {inviteurl}
-*Please Note: MZ Bot is not responsible for any content in that server.*""")
+*Please Note: Piloted Bot is not responsible for any content in that server.*""")
             await ctx.reply("✅ Sent.")
 
 
@@ -2340,7 +2340,7 @@ async def timer(ctx, duration, *, item=' '):
     
     stop = False
     timel = duration2
-    timels = mzutils.timestr(duration2)
+    timels = Pilotedutils.timestr(duration2)
     iters = 0
     startt = datetime.datetime.utcnow()
     
@@ -2376,7 +2376,7 @@ async def timer(ctx, duration, *, item=' '):
         await asyncio.sleep(10 - lasttt)
         
         timel = timel - (10 - lasttt)
-        timels = mzutils.timestr(timel)
+        timels = Pilotedutils.timestr(timel)
         
         embed_dict = embed.to_dict()
         
@@ -3266,7 +3266,7 @@ async def debug(ctx):
 
 @bot.command(aliases=['tempmute'])
 async def timeout(ctx, member: discord.Member, duration: str, *, reason: str = None):
-    duration2 = mzutils.parseTime(duration)
+    duration2 = Pilotedutils.parseTime(duration)
     if duration2 is None:
         # time parsing failed
         return
