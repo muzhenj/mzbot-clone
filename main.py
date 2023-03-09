@@ -62,7 +62,7 @@ while True:
         from discord.ext import commands
         from discord.ext.commands.errors import *
         
-        import Pilotedhelp
+        import mzhelp
         import mzutils
         
         # for replit config:
@@ -587,8 +587,8 @@ async def updatelog(ctx):
 
 @bot.command(aliases=['commands', 'cmds', 'view', 'command'])
 async def help(ctx, cmd=None):
-    helpdict = Pilotedhelp.helpcmdz
-    usagedict = Pilotedhelp.helpusage
+    helpdict = mzhelp.helpcmdz
+    usagedict = mzhelp.helpusage
     
     command_list = []
     for key in helpdict.keys():
