@@ -563,14 +563,14 @@ async def updatelog(ctx):
         except Exception:
             pass
         
-        repo = git.Repo.clone_from("https://github.com/XInTheDark/Pilotedbot-v2", "Pilotedbot-v2")  # gets the repo from GitHub
+        repo = git.Repo.clone_from("https://github.com/XInTheDark/mzbot-v2", "Pilotedbot-v2")  # gets the repo from GitHub
         # master = repo.head.reference
         
         # message = master.commit.message
         # dateTimeStamp = master.commit.committed_date
         # commitID = master.commit.hexsha
         
-        description = "**Latest commits from `Pilotedbot-v2`:**\n\n"
+        description = "**Latest commits from `mzbot-v2`:**\n\n"
         
         # get 5 most recent commits and add them to the string
         for commit in repo.iter_commits('master', max_count=5):
